@@ -1,0 +1,19 @@
+version: '2'
+services:
+  dovecot:
+    build: dovecot
+    image: caioquirino/dovecot
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8000:8000"
+    links:
+      - "db:db"
+  db:
+    image: postgres:9
+    environment:
+      - POSTGRES_USER=mails
+      - POSTGRES_PASSWORD=mails
+    volumes:
+      - "./data/postgres:/var/lib/postgresql/data"
+      -  "./assets/postgre/s:/docker-entrypoint-initdb.d/"
